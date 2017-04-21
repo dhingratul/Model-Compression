@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Apr 20 15:47:06 2017
+
+@author: dhingratul
+Custom model tutorial from Tensorflow
+"""
+
+import numpy as np
+import tensorflow as tf
+
+# List of Features
+def model(features,labels,mode):
+    W=tf.get_variable("W",[1],dtype=tf.float64) #name,shape, data-type
+    b=tf.get_variable("b",[1],dtype=tf.float64)
+    y=W*features['x']+b
+    # Loss sub-graph
+    loss=tf.reduce_sum(tf.square(y-labels))
+    #Training Sub-graph
+    global_step=tf.train.get_global_step()
+    optimizer=tf.train.GradientDescentOptimizer(0.01)
+    train=tf.group(optimizer.minimize(loss),tf.assign_add(global_step,1))
+    # ModeFnOps connects the user sub-graph with predefined fns
+    return tf.contrib.learn.ModelFnOps(
+            mode=mode,predictions=y,
+            loss=loss,
+            train_op=train
+            )
+    
+estimator=tf.contrib.learn.Estimator(model_fn=model)
+# Data
+x=np.array([1.,2.,3.,4.])
+y=np.array([0.,-1.,-2.,-3.])
+input_fn=tf.contrib.learn.io.numpy_input_fn({"x":x},y,batch_size=4,num_epochs=1000)   #batch size=4
+ #train
+estimator.fit(input_fn=input_fn,steps=1000)
+ #Evaluation
+print(estimator.evaluate(input_fn=input_fn,steps=10))
