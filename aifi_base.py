@@ -34,12 +34,13 @@ h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
 W_fc2 = weight_variable([1024, 10])
 b_fc2 = bias_variable([10])
 y_conv = tf.matmul(h_fc1_drop, W_fc2) + b_fc2
-cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y_conv, y_))
+cross_entropy = tf.reduce_mean(
+    tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y_conv))
 train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
 correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 sess.run(tf.initialize_all_variables())
-for i in range(1000):
+for i in range(20000):
   batch = mnist.train.next_batch(50)
   if i%1 == 0:
     train_accuracy = accuracy.eval(feed_dict={
