@@ -1,5 +1,5 @@
 # AiFi
-AiFi Project
+AiFi Project-Tensorflow
 
 Here is the written exercise as we discussed. You have three days to work on it. Enjoy the journey of learning and exploring!
 
