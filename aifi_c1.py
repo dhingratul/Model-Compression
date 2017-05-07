@@ -8,7 +8,6 @@ Created on Sat May  6 20:02:25 2017
 
 import time
 start = time.perf_counter()
-
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
 import tensorflow as tf
@@ -29,16 +28,16 @@ def max_pool_2x2(x):
 def max_pool_4x4(x):
   return tf.nn.max_pool(x, ksize=[1, 4, 4, 1],
                         strides=[1, 4, 4, 1], padding='SAME')  
-W_conv1 = weight_variable([5, 5, 1, 32])
-b_conv1 = bias_variable([32])
+W_conv1 = weight_variable([5, 5, 1, 2])
+b_conv1 = bias_variable([2])
 x_image = tf.reshape(x, [-1,28,28,1])
 h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)
 # Computes rectified linear: `max(features, 0)`.
 h_pool1 = max_pool_4x4(h_conv1)
 
-W_fc1 = weight_variable([7 * 7 * 32, 128])
+W_fc1 = weight_variable([7 * 7 * 2, 128])
 b_fc1 = bias_variable([128])
-h_pool1_flat = tf.reshape(h_pool1, [-1, 7*7*32])
+h_pool1_flat = tf.reshape(h_pool1, [-1, 7*7*2])
 h_fc1 = tf.nn.relu(tf.matmul(h_pool1_flat, W_fc1) + b_fc1)
 keep_prob = tf.placeholder(tf.float32)
 h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
