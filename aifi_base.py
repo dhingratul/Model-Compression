@@ -1,3 +1,5 @@
+pimport time
+start = time.perf_counter()
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
@@ -48,7 +50,7 @@ train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
 correct_prediction = tf.equal(tf.argmax(y_conv, 1), tf.argmax(y_, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 sess.run(tf.initialize_all_variables())
-for i in range(100):
+for i in range(20000):
     batch = mnist.train.next_batch(50)
     if i % 1 == 0:
         train_accuracy = accuracy.eval(feed_dict={
@@ -58,3 +60,5 @@ for i in range(100):
 
 print("test accuracy %g" % accuracy.eval(feed_dict={
     x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0}))
+elapsed = time.perf_counter() - start
+print('Elapsed %.3f seconds.' % elapsed)
