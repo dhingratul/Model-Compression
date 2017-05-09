@@ -4,7 +4,8 @@
 Created on Sat May  6 20:02:25 2017
 
 @author: dhingratul
-3 Layer simple CNN with conv1, fc1, fc2 for MNIST recongition
+Final model , reducing the parameters by 236 times, memory footprint by 19.5
+times as compared to base model
 """
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
