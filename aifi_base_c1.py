@@ -3,13 +3,15 @@
 """
 Created on Sun May  7 12:29:07 2017
 
-@author: labuser
+@author: dhingratul
+3 Layer simple CNN with conv1, fc1, fc2 for MNIST recongition
+
 """
 
 import time
-start = time.perf_counter()
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
+start = time.perf_counter()
 mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
 sess = tf.InteractiveSession()
 x = tf.placeholder(tf.float32, shape=[None, 784])
