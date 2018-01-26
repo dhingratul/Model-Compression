@@ -1,0 +1,5 @@
+name: mnist
+channels:
+  - defaults
+prefix: /home/dhingratul/anaconda2/envs/mnist
+
